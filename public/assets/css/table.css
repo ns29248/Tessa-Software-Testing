@@ -1,0 +1,78 @@
+@media only screen and (max-width: 768px) {
+    td.product-thumbnail {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    td.product-thumbnail img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Remove the "Product" label */
+    td.product-thumbnail:before {
+        content: none;
+    }
+
+    /* Force table to not be like tables anymore */
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    /* Hide table headers */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    /* Style for each product box */
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 1em;
+        padding: 5px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        background-color: #fff;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Style for the content of each td */
+    td {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3px;
+        margin-left: 29px;
+        margin-right: 29px;
+    }
+
+    td:before {
+        /* This is your label */
+        content: attr(data-title);
+        flex-grow: 0; /* Do not allow the label to grow */
+        flex-shrink: 0; /* Do not allow the label to shrink */
+        flex-basis: auto; /* Adjust this to fit the content of your label */
+        margin-right: 5px; /* Adjust if necessary */
+        white-space: nowrap; /* Prevent the label from wrapping and ensure it stays in one line */
+    }
+
+    /* Style for the content of each td */
+    td .unit-amount,
+    td .subtotal-amount {
+        text-align: right; /* Align the content to the right */
+        flex-grow: 1; /* Allow the content to grow and take up available space */
+    }
+    .table > :not(:first-child) {
+        border-top: none;
+    }
+}

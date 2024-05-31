@@ -1,0 +1,578 @@
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-inner {
+    display: flex;
+    height: 100%;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    text-decoration: none;
+    font-size: 2em;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.carousel-control.prev {
+    left: 0;
+}
+
+.carousel-control.next {
+    right: 0;
+}
+
+/* Hide all but the active item */
+.carousel-item:not(.active) {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+.carousel-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0; /* Ensure it's below the actual slides */
+    transition: opacity 0.5s ease; /* Optional: fade transition for the background */
+}
+
+@keyframes moveUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+@keyframes moveDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+@keyframes moveLeft {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes moveRight {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Animation classes */
+.animate-up {
+    animation: moveUp 2s ease forwards;
+}
+
+.animate-down {
+    animation: moveDown 2s ease forwards;
+}
+
+.animate-left {
+    animation: moveLeft 2s ease forwards;
+}
+
+.animate-right {
+    animation: moveRight 2s ease forwards;
+}
+/* This stays mostly the same, but let's make sure it's positioned absolutely */
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 55px;
+    max-width: 640px;
+    z-index: 2; /* Above the slides */
+    color: #ffffff; /* Assuming you want white text */
+    overflow: visible; /* Changed from hidden to ensure the border clip is visible */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Adapting .line to work with new carousel structure */
+.banner-content .line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 9px solid #ffffff;
+    clip-path: polygon(0 0, 60% 0, 36% 100%, 0 100%);
+    z-index: -1; /* Behind the text content */
+}
+
+/* The rest of your styles remain the same */
+.banner-content .sub-title {
+    /* ... */
+}
+
+.banner-content h1 {
+    /* ... */
+}
+
+.banner-content p {
+    /* ... */
+}
+
+.banner-content .btn-box {
+    /* ... */
+}
+
+.banner-content .btn-box .optional-btn {
+    /* ... */
+}
+
+/* Since we're not using Owl Carousel, we'll apply animations differently */
+.carousel-item.active .banner-content .sub-title,
+.carousel-item.active .banner-content h1,
+.carousel-item.active .banner-content p,
+.carousel-item.active .banner-content .btn-box,
+.carousel-item.active .banner-content .line {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-delay: 0.3s;
+}
+
+/* Here we apply the same animation but you'll need to define fadeInDown and fadeInUp if not already defined */
+.carousel-item.active .banner-content .sub-title,
+.carousel-item.active .banner-content h1 {
+    animation-name: fadeInDown;
+}
+
+.carousel-item.active .banner-content p,
+.carousel-item.active .banner-content .btn-box {
+    animation-name: fadeInUp;
+}
+
+.carousel-item.active .banner-content .line {
+    animation-name: fadeInLeft;
+}
+
+/* You need to define the keyframes for the animations if they're not already in your CSS */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+/* This media query targets screens with a width less than 768px (tablets and smaller) */
+@media only screen and (max-width: 768px) {
+
+    .hide-on-mobile {
+        display: none; /* Hides elements with this class on small screens */
+    }
+    .xton-responsive-nav .others-option .option-item {
+        display: none; /* Hides search and cart icons on small screens */
+    }
+    .carousel {
+        /* Set a specific height or max-height if you want the carousel taller */
+        height: 75vh; /* Adjust this value to make the carousel taller */
+        /* Optionally, you can add a minimum height */
+        min-height: 300px; /* Adjust this value as needed */
+    }
+
+    .carousel img {
+        width: 100%; /* Ensure the image is not wider than its container */
+        height: 75vh; /* Maintain the aspect ratio */
+        object-fit: cover; /* Cover the area, may crop the image */
+    }
+
+    .carousel .banner-content {
+        /* Adjust the banner content to fit small screens */
+        padding: 20px; /* Smaller padding */
+        max-width: 100%; /* Full width on small screens */
+        text-align: center; /* Center the text */
+        transform: translate(-50%, -50%); /* Keep it centered */
+        top: 50%; /* Vertically center */
+        left: 50%; /* Horizontally center */
+    }
+
+    .carousel .banner-content .sub-title {
+        font-size: 9px; /* Smaller font size for subtitle */
+    }
+
+    .carousel .banner-content h1 {
+        font-size: 12px; /* Smaller font size for the main title */
+        line-height: 1.2; /* Adjust line height to prevent overlapping */
+    }
+
+    .carousel .banner-content p {
+        font-size: 8px; /* Smaller font size for paragraph text */
+    }
+
+    .carousel .banner-content .btn-box a {
+        font-size: 7px; /* Smaller font size for buttons */
+        padding: 7px 8px; /* Smaller padding for buttons */
+        margin: 5px 0; /* Add margin between stacked buttons */
+    }
+
+    /* If you have a line or other decorative elements, adjust as necessary */
+    .carousel .banner-content .line {
+        /* Adjust the line properties for small screens */
+        border-width: 6px; /* Smaller border width */
+        /* Adjust clip-path if necessary */
+    }
+}
+
+.brand-area {
+    text-align: center;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    overflow: hidden; /* Ensures no overflow content is visible around the edges */
+}
+
+.brand-slides {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.brand-slides::-webkit-scrollbar {
+    display: none;
+}
+
+.brand-item {
+    flex: 0 0 auto;
+    width: calc(100% / 4); /* Adjust based on the number of items you want visible */
+    scroll-snap-align: start;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.brand-item a, .brand-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    outline: none;
+}
+/* Ensure images within brand items are responsive and centered */
+.brand-item img {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes bottom margin/gap */
+}
+
+/* Media Queries for Responsiveness */
+@media only screen and (max-width: 1024px) {
+    .brand-item {
+        width: calc(100% / 3); /* Three items for smaller tablets */
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .brand-item {
+        width: calc(100% / 3); /* Three items for smaller devices */
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .brand-item {
+        width: calc(100% / 2); /* Two items for mobile phones */
+    }
+}
+ .navbar-area.header-sticky {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     z-index: 999;
+     -webkit-box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
+     box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
+     background: #ffffff !important;
+     opacity: 0;
+     visibility: hidden;
+     -webkit-transition: 0.5s;
+     transition: 0.5s;
+ }
+.header-sticky {
+    transition: transform 0.3s ease; /* Smooth transition for transform */
+    transform: translateY(0); /* Start fully visible */
+}
+
+.header-sticky.is-sticky {
+    transform: translateY(0); /* Ensures it's visible when sticky */
+}
+
+.header-sticky.is-hidden {
+    transform: translateY(-100%); /* Moves it up out of view */
+}
+.navbar-area.header-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    -webkit-box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
+    background: #ffffff !important;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.navbar-area.header-sticky.is-sticky {
+    opacity: 1;
+    visibility: visible;
+}
+
+.navbar-area.header-sticky.scrollUp {
+    -webkit-transform: translateY(-85px);
+    transform: translateY(-85px);
+    opacity: 0;
+    visibility: hidden;
+}
+
+/*NAVBAR*/
+.navbar-area .xton-responsive-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjust alignment to space-between */
+}
+.burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px; /* Width of the burger icon */
+    height: 25px; /* Total height of the burger icon */
+    cursor: pointer;
+}
+
+
+.burger-menu span {
+    height: 3px;
+    background-color: #333; /* Color of the burger bars */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+/* Sidebar Styles */
+.sidebarModal .modal-dialog {
+    width: 80%;
+    max-width: 300px; /* Adjusted max width for responsiveness */
+}
+
+.sidebarModal .modal-content {
+    background-color: #2a2a2a; /* Dark grey background for better contrast */
+    color: #fff; /* Ensures high readability */
+    border: none; /* Clean look without borders */
+}
+
+/* Close Button Customization */
+.sidebarModal .close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    z-index: 1000; /* Ensures visibility over other elements */
+    color: #ccc; /* Subtle color, easy on the eyes */
+    font-size: 24px; /* Clear visibility for usability */
+    cursor: pointer; /* Indicates clickable item */
+}
+
+/* Navigation Menu List Styles */
+.nav-menu-list {
+    list-style: none; /* Simplifies list appearance */
+    margin: 20px 0; /* Provides adequate spacing from container edges */
+    padding: 0; /* Removes default padding */
+}
+
+.nav-menu-list li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #d0d0d0; /* Soft grey color for normal state */
+    text-decoration: none; /* Focus on cleanliness */
+    font-weight: bold; /* Emphasizes navigational elements */
+    position: relative; /* Setup for pseudo-elements */
+    transition: color 0.5s, background-color 0.3s; /* Smooth transitions for interactions */
+    border-bottom: 1px solid #333; /* Subtle separation between items */
+}
+
+.nav-menu-list li:last-child a {
+    border-bottom: none; /* Ensures the last item is not unduly highlighted */
+}
+
+.nav-menu-list li a i {
+    margin-right: 10px; /* Adequate spacing for icons */
+    font-size: 16px; /* Proportional icon sizing */
+}
+
+/* Hover effects for color change and underline */
+.nav-menu-list li a:hover, .nav-menu-list li a:focus {
+    color: #f53f85; /* Bright color for hover state */
+    background-color: #333; /* Deeper background on hover for contrast */
+}
+
+.nav-menu-list li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #f53f85; /* Pink underline to match hover text color */
+    transition: width 0.5s; /* Ensures a smooth transition */
+}
+
+.nav-menu-list li a:hover::before, .nav-menu-list li a:focus::before {
+    width: 100%; /* Full width on hover/focus for emphasis */
+}
+
+
+
+
+
+.instagram-slides {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;  // Hides the scrollbar in Firefox
+}
+
+.instagram-slides::-webkit-scrollbar {
+    display: none;  // Hides the scrollbar in WebKit browsers
+}
+
+.single-instagram-post {
+    flex: 0 0 auto;
+    width: 317.16px;
+    height: 317.16px;
+    margin-right: 0px;  // Set to 0 to eliminate space between slides
+position: relative;
+    scroll-snap-align: start;
+}
+
+.single-instagram-post img {
+    width: 100%;
+    height: auto;
+}
+
+.single-instagram-post .link-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+@media only screen and (max-width: 992px) and (min-width: 768px) {
+    .xton-responsive-nav .container {
+        display: flex;
+        justify-content: space-between; /* Ensures space distribution between major sections */
+        align-items: center;
+    }
+
+    .xton-responsive-menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Align items properly within the container */
+        width: 100%; /* Ensures the container takes full width */
+    }
+
+    .xton-responsive-menu .logo {
+        order: 1; /* Keeps logo on the left */
+        margin-right: auto; /* Pushes all other items to the far right */
+    }
+
+    .xton-responsive-menu .others-option {
+        order: 2; /* Right side elements */
+        display: flex;
+        align-items: center;
+        margin-left: 10px; /* Align these elements to the far right */
+    }
+
+    .xton-responsive-nav .others-option .option-item {
+        margin-right: 15px; /* Space between search and cart icons */
+    }
+
+    .xton-responsive-menu .burger-menu {
+        order: 3; /* Ensures burger menu is last on the right */
+        margin-right: 15px;
+    }
+    .xton-responsive-nav .search-btn-box .search-btn {
+        font-size: 25px; /* Adjust the font size to scale up the search icon */
+    }
+
+    .xton-responsive-nav .option-item .cart-btn {
+        font-size: 25px; /* Adjust the font size for the cart icon */
+    }
+    .xton-responsive-nav.is-sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        z-index: 1000;
+        background-color: #fff; /* Change as needed */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Optional shadow for better visibility */
+        display: flex;
+        justify-content: space-between; /* Ensures space distribution between major sections */
+        align-items: center;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .xton-responsive-nav.is-hidden {
+        top: -100%; /* Hides the navbar when scrolling down */
+        transition: top 0.3s; /* Smooth transition for hiding and showing */
+    }
+
+}
