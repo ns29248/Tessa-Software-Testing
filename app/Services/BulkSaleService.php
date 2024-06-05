@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Exception;
 
 class BulkSaleService

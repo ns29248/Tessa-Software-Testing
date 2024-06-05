@@ -17,7 +17,6 @@ class StylistController extends Controller
 
     public function index()
     {
-        $stylists = $this->stylistService->getAllStylists();
         return view('admin.stylists', ['stylists'=> $this->stylistService->getAllStylists()]);
     }
 

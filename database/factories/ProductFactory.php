@@ -2,30 +2,31 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
- */
 class ProductFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Product::class;
+
+    public function definition()
     {
         return [
             'name' => $this->faker->unique()->word,
-            'description' => $this->faker->streetName,
-            'brand_id' => Brand::inRandomOrder()->first()->id,
-            'category_id' => Category::inRandomOrder()->first()->id,
-            'quantity' =>$this->faker->numberBetween(1,200),
-            'price' => $this->faker->numberBetween(1000,2000),
-            'stylist_price' =>$this->faker->numberBetween(100,1000),
+            'brand_id' => Brand::inRandomOrder()->first()->id ?? Brand::factory(),
+            'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory(),
+            'quantity' => $this->faker->numberBetween(1, 200),
+            'price' => $this->faker->numberBetween(1000, 2000),
+            'stylist_price' => $this->faker->numberBetween(100, 1000),
         ];
+    }
+
+    public function withDescription($description)
+    {
+        return $this->afterCreating(function (Product $product) use ($description) {
+            $product->translations()->create(['description' => $description]);
+        });
     }
 }

@@ -8,12 +8,6 @@ use App\Services\CouponService;
 
 class CoursesController extends Controller
 {
-    protected $couponService;
-    public function __construct(CouponService $couponService)
-    {
-        $this->couponService = $couponService;
-    }
-
     public function index()
     {
         // Retrieve the courses from the database

@@ -19,10 +19,13 @@ class ProductController extends Controller
 
     public function index()
     {
+        $data = $this->productService->getAllBrandsAndCategories();
+        $products = $this->productService->getProducts()->get();
+
         return view('admin.product', [
-            'brands' => $this->productService->getAllBrandsAndCategories()['brands'],
-            'categories' => $this->productService->getAllBrandsAndCategories()['categories'],
-            'products' => $this->productService->getProducts()->get()
+            'brands' => $data['brands'],
+            'categories' => $data['categories'],
+            'products' => $products
         ]);
     }
 
