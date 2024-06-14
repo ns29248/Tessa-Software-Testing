@@ -47,7 +47,7 @@
 
                         </div>
                         <div class="products-content">
-                            <span class="category">{{$product->brand->name}}</span>
+                            <span class="brand">{{$product->brand->name}}</span>
                             <span class="category">{{$product->category->name}}</span>
                             <h3><a href="#">{{ $product->name }}</a></h3>
                             <div class="price">
