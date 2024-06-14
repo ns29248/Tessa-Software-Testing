@@ -30,21 +30,40 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'address' => ['required', 'string'],
+            'city' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'postcode'=>['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
+            'address'=>$request->address,
+            'city'=>$request->city,
+            'phone'=>$request->phone,
+            'postcode'=>$request->postcode,
             'password' => Hash::make($request->password),
+            'role' => 0,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
+        $isStylistChecked = $request->has('is_stylist');
 
-        return redirect(route('dashboard', absolute: false));
+        if($isStylistChecked)
+        {
+            return redirect(url('request_form'));
+        }
+        else{
+            return redirect(route('main', absolute: false));
+        }
+
     }
 }

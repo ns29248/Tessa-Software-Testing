@@ -31,19 +31,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('main/home/index');
-});
-Route::get('/',[MainController::class, 'showProducts'])->name('main');
-Route::get('/', [MainController::class, 'showProducts'])->name('show_products');
+// Publicly accessible routes
+Route::get('/', [MainController::class, 'showProducts'])->name('main');
 Route::get('/shop', [MainController::class, 'shop'])->name('shop');
 Route::get('product/show-product/{product}', [MainController::class, 'show'])->name('showProduct');
+Route::view('/about', 'main/about/about')->name('about');
+Route::view('/contact', 'main/contact/contact')->name('contact');
+Route::get('/set-language/{lang}', [\App\Http\Controllers\Main\LanguageController::class, 'set'])->name('set.language');
+Route::get('/hair-color/{brandName}', [HairColorController::class, 'showHairColors'])->name('hair.colors');
+Route::get('/sale', [SalesController::class, 'index'])->name('sales');
+Route::get('/shop/{brandName}', [ShopByBrandController::class, 'shopByBrand'])->name('shop.brand');
+Route::get('course/show-course/{course}', [CoursesController::class, 'show'])->name('showCourse');
+Route::get('/course', [CoursesController::class, 'index'])->name('courses');
+Route::view('/about', 'main/about/about');
+Route::view('/contact', 'main/contact/contact');
 
+
+// Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::middleware(\App\Http\Middleware\Admin::class)->group(function () {
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
-        });
+        })->name('adminDashboard');
         Route::resource('products', ProductController::class)->except('create')->middleware('convertToWebp');
         Route::resource('courses', CourseController::class)->except('create')->middleware('convertToWebp');
         Route::delete('courses/{course}/images/{image}', [CourseController::class, 'destroyImage'])->name('image.destroy');
@@ -60,59 +69,34 @@ Route::middleware('auth')->group(function () {
         Route::delete('stylists/{stylist}', [StylistController::class, 'destroy'])->name('stylist.destroy');
         Route::get('/sales/create/{product}', [\App\Http\Controllers\Admin\SalesController::class, 'create'])->name('sales.create');
         Route::resource('/sales', \App\Http\Controllers\Admin\SalesController::class)->except('create');
-
-        Route::resource('coupons',CouponController::class)->except('create');
+        Route::resource('coupons', CouponController::class)->except('create');
         Route::post('/coupons/store', [CouponController::class, 'store'])->name('coupon.store');
-
-
         Route::get('/bulk-sale', [\App\Http\Controllers\Admin\BulkSaleController::class, 'createBulkSale'])->name('admin.bulkSale.create');
-
         Route::post('/bulk-sale/store', [\App\Http\Controllers\Admin\BulkSaleController::class, 'storeBulkSale'])->name('admin.bulkSale.store');
-
         Route::get('/bulk-sale/show-products', [\App\Http\Controllers\Admin\BulkSaleController::class, 'showProductsForBulkSale'])->name('admin.bulkSale.showProducts');
-
-
+        Route::get('/search', [\App\Http\Controllers\Admin\SearchController::class, 'search'])->name('search');
     });
+
     Route::resource('requests', RequestStylistController::class)->only('store');
     Route::view('/request_form', 'main/request_stylist/request_form')->middleware('stylist');
 
-    Route::get('/', [MainController::class, 'showProducts'])->name('show_products');
-    Route::get('/shop', [MainController::class, 'shop'])->name('shop');
-    Route::get('product/show-product/{product}', [MainController::class, 'show'])->name('showProduct');
-    Route::get('course/show-course/{course}', [CoursesController::class, 'show'])->name('showCourse');
-    Route::get('/course', [CoursesController::class, 'index'])->name('courses');
-    Route::get('/sale', [SalesController::class, 'index'])->name('sales');
 
-
-
-    // The following routes are accessible to authenticated users only
+    // Routes for authenticated users only
     Route::get('/cart', [CartController::class, 'showCart'])->name('Cart');
     Route::get('/checkout', [CartController::class, 'Checkout'])->name('Checkout');
-//    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
     Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('my.orders');
     Route::get('/order-details/{order_id}', [OrderController::class, 'orderDetails'])->name('order.details');
     Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('show.wishlist');
-    Route::get('/shop/{brandName}', [ShopByBrandController::class,'shopByBrand'])->name('shop.brand');
-    Route::get('/hair-color/{brandName}', [HairColorController::class,'showHairColors'])->name('hair.colors');
-
-
-//    Route::post('/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply-coupon');
-
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
-
-Route::get('/set-language/{lang}', [\App\Http\Controllers\Main\LanguageController::class, 'set'])->name('set.language');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
 
 require __DIR__.'/auth.php';
-

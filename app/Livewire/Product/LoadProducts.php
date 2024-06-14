@@ -5,7 +5,7 @@ namespace App\Livewire\Product;
 use App\Models\Product;
 use Livewire\Component;
 
-class loadProducts extends Component
+class LoadProducts extends Component
 {
     public $amount = 9;
     public $selectedCategory = null;

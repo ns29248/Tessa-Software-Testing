@@ -255,7 +255,8 @@
                                     @endif
                                 </div>
                                 <input type="hidden" value="{{$relatedProduct->id}}" class="prod_id">
-                                @livewire('add-to-cart', ['product_id' => $relatedProduct->id])
+                                <livewire:cart.add-to-cart :product_id="$relatedProduct->id" :key="$relatedProduct->id" />
+
                             </div>
                             @if($relatedProduct->sale()->active()->exists())
                                 <span class="products-discount">

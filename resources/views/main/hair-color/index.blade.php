@@ -32,7 +32,9 @@
                             <div class="products-button">
                                 <ul>
                                     <li>
-                                        @livewire('wishlist', ['product_id' => $product->id])
+                                        @auth()
+                                            <livewire:wishlist :product_id="$product->id" />
+                                        @endauth
                                     </li>
 
                                     <li>
@@ -55,7 +57,8 @@
                                 <span class="price">{{ $product->price }}den</span>
 {{--                                <span class="new-price">${{ $product->sale->sale_price }}</span>--}}
                             </div>
-                            @livewire('add-to-cart', ['product_id' => $product->id])
+                            <livewire:cart.add-to-cart :product_id="$product->id" :key="$product->id" />
+
                         </div>
                     </div>
                 </div>
