@@ -32,7 +32,7 @@ class SalesController extends Controller
     public function store(SaleRequest $request)
     {
         $this->salesService->createSale($request->validated());
-        return redirect()->route('sales.index')->with('success', 'Sale added successfully.');
+        return redirect()->back()->with('message', 'Sale added successfully.');
     }
 
     public function show(Sale $sale)

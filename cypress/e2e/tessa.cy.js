@@ -7,15 +7,19 @@ describe('Tessa E-commerce Site', () => {
 
         function clickLoadMore() {
             // Check if the Load More button is visible and clickable
-            cy.get('.default-btn:contains("Load More")').should('be.visible').click();
+            cy.get('body').then($body => {
+                if ($body.find('.default-btn:contains("Load More")').length > 0) {
+                    cy.get('.default-btn:contains("Load More")')
+                        .should('be.visible')
+                        .click();
 
-            // Check if the message indicating no more products is visible
-            cy.contains('No more products to be loaded!!!', { timeout: 10000 }).should('not.exist').then(() => {
-                // Recursively click Load More if the button is still visible
-                if (Cypress.$('.default-btn:contains("Load More")').length > 0) {
+                    // Wait for a short time to allow the next batch of products to load
+                    cy.wait(2000);
+
+                    // Recursively call clickLoadMore to load more products
                     clickLoadMore();
                 } else {
-                    // If the button disappears, verify the final message
+                    // Verify the final message if no more products to load
                     cy.contains('No more products to be loaded!!!', { timeout: 10000 }).should('be.visible');
                 }
             });
@@ -24,7 +28,6 @@ describe('Tessa E-commerce Site', () => {
         // Start the process by clicking Load More initially
         clickLoadMore();
     });
-
 
     it('should search for a nonexistent product and verify no more products on clicking Load More', () => {
         cy.visit('/', { failOnStatusCode: false });

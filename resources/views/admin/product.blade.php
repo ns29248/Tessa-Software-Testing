@@ -10,9 +10,9 @@
                         <h4 class="card-title">Add Product</h4>
                     </div>
                     <div class="card-body">
-                        @if(session('success'))
+                        @if(session('message'))
                             <div class="alert alert-success">
-                                {{ session('success') }}
+                                {{ session('message') }}
                             </div>
                         @endif
                         @if(session('error'))

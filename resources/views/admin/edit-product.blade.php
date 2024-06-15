@@ -22,8 +22,16 @@
                                 <input type="text" name="name" id="name" class="form-control" placeholder="Enter product name" value="{{ $product->name }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="description">Product Description</label>
-                                <textarea name="description" id="description" class="form-control" placeholder="Enter product description" required>{{ $product->description }}</textarea>
+                                <label for="description_en">Product Description (English)</label>
+                                <textarea name="description[en]" id="description_en" class="form-control" placeholder="Enter product description in English" required>{{ $product->translations->where('locale', 'en')->first()->description ?? '' }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="description_mk">Product Description (Macedonian)</label>
+                                <textarea name="description[mk]" id="description_mk" class="form-control" placeholder="Enter product description in Macedonian" required>{{ $product->translations->where('locale', 'mk')->first()->description ?? '' }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="description_shq">Product Description (Albanian)</label>
+                                <textarea name="description[shq]" id="description_shq" class="form-control" placeholder="Enter product description in Albanian" required>{{ $product->translations->where('locale', 'shq')->first()->description ?? '' }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Product Quantity</label>
@@ -35,7 +43,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="stylist_price">Stylist Price</label>
-                                <input type="number" name="stylist_price" id="stylist_price" class="form-control" placeholder="Enter product price" value="{{ $product->stylist_price }}" required>
+                                <input type="number" name="stylist_price" id="stylist_price" class="form-control" placeholder="Enter stylist price" value="{{ $product->stylist_price }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="photo" class="file-input">

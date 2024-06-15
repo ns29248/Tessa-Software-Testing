@@ -7,6 +7,16 @@
             @if($product)
                 <div class="col-md-6">
                     <div class="card">
+                        @if(session('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <div class="card-header">
                             <h4 class="card-title">Add Product to Sale</h4>
                         </div>

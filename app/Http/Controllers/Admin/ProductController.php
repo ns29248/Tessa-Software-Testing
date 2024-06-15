@@ -44,7 +44,8 @@ class ProductController extends Controller
     {
         return view('admin.edit-product', [
             'brands' => $this->productService->getAllBrandsAndCategories()['brands'],
-            'categories' => $this->productService->getAllBrandsAndCategories()['categories']
+            'categories' => $this->productService->getAllBrandsAndCategories()['categories'],
+            'product' => $product
         ]);
     }
 
@@ -57,7 +58,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $this->productService->deleteProduct($product);
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+        return redirect()->route('products.index')->with('message', 'Product Deleted Successfully');
     }
 }
 
